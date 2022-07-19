@@ -53,19 +53,14 @@ services:
       static-network:
         ipv4_address: 172.28.1.2
 
-  applications:
-    image: idom:v1
-    volumes:
-      - ./:/applications
-    command: >
-      bash -c "export TIMEFLOW_DEV=false  && cd /applications && uvicorn main:app --workers 1 --host 0.0.0.0 --port 8001 --reload --access-log"
+  svelte-frontend:
+    image: sveltekit-docker:latest
     ports:
-      - 8001:8001
+      - 3000:3000
     depends_on:
       - "db"
     env_file:
       - .env
-    container_name: applicationscd
     networks:
       static-network:
         ipv4_address: 172.28.1.1
